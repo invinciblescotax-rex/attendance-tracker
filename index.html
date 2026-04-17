@@ -1,1 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PeopleFlow CRM | Employee Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">PF</div>
+        <div>
+          <p class="eyebrow">Employee CRM</p>
+          <h1>PeopleFlow</h1>
+        </div>
+      </div>
 
+      <nav class="nav" id="moduleNav">
+        <button class="nav-link active" data-view="dashboard">Dashboard</button>
+        <button class="nav-link" data-view="attendance">Attendance</button>
+        <button class="nav-link" data-view="leave">Leave</button>
+        <button class="nav-link" data-view="timesheets">Timesheets</button>
+        <button class="nav-link" data-view="employees">Employees</button>
+        <button class="nav-link" data-view="reports">Reports</button>
+        <button class="nav-link" data-view="settings">Settings</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <p class="eyebrow">Deployment Flow</p>
+        <h3>Single-page web app</h3>
+        <p>All modules stay on one webpage. We can keep building here and publish the same codebase to GitHub Pages or a hosted backend later.</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Unified Workforce Portal</p>
+          <h2>One webpage for attendance, leave, timesheets, employee records, and future HR workflows.</h2>
+          <p class="hero-copy">
+            This version behaves like a single-page application. Clicking the left menu switches modules inside the same page without opening a new file.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button class="primary-btn" data-view-jump="attendance">Open Attendance</button>
+          <button class="secondary-btn" data-view-jump="settings">Location Rules</button>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <span>Present Today</span>
+          <strong>148</strong>
+          <small>92% live attendance rate</small>
+        </article>
+        <article class="stat-card">
+          <span>Leave Requests</span>
+          <strong>12</strong>
+          <small>5 pending manager approval</small>
+        </article>
+        <article class="stat-card">
+          <span>Timesheets Due</span>
+          <strong>27</strong>
+          <small>Before 6:00 PM today</small>
+        </article>
+        <article class="stat-card">
+          <span>Tracked Zones</span>
+          <strong>1</strong>
+          <small>Configurable geofence check</small>
+        </article>
+      </section>
+
+      <section class="view-stack">
+        <article class="panel view-panel is-active" data-view-panel="dashboard">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h3>Overview</h3>
+            </div>
+            <span class="badge success">Live</span>
+          </div>
+
+          <div class="roadmap-grid">
+            <div class="roadmap-card">
+              <strong>Attendance with geofence</strong>
+              <p>Mandatory location capture before attendance is marked.</p>
+            </div>
+            <div class="roadmap-card">
+              <strong>Leave workflow</strong>
+              <p>Employees apply, managers review, HR tracks balances.</p>
+            </div>
+            <div class="roadmap-card">
+              <strong>Timesheets</strong>
+              <p>Daily project entries with submission and approval states.</p>
+            </div>
+            <div class="roadmap-card">
+              <strong>Expandable shell</strong>
+              <p>Payroll, onboarding, expenses, assets, and reports can fit into the same structure.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel view-panel" data-view-panel="attendance">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Attendance</p>
+              <h3>Clock in only inside the approved location radius</h3>
+            </div>
+            <span class="badge warning">Mandatory geofence</span>
+          </div>
+
+          <form class="form-grid" id="attendanceForm">
+            <label>
+              Employee ID
+              <input type="text" id="employeeId" placeholder="EMP-1024" required>
+            </label>
+            <label>
+              Shift
+              <select id="shift">
+                <option>Morning</option>
+                <option>General</option>
+                <option>Night</option>
+              </select>
+            </label>
+            <label class="full-width">
+              Notes
+              <textarea id="attendanceNotes" placeholder="Optional attendance remark"></textarea>
+            </label>
+            <div class="form-actions full-width">
+              <button type="button" class="primary-btn" id="captureLocationBtn">Capture Mandatory Location</button>
+              <button type="submit" class="secondary-btn">Mark Attendance</button>
+            </div>
+          </form>
+
+          <div class="location-box" id="locationStatus">Location not captured yet.</div>
+          <div class="geofence-summary" id="geofenceSummary">
+            Allowed location not configured yet. Add the official office latitude, longitude, and radius in Settings.
+          </div>
+        </article>
+
+        <article class="panel view-panel" data-view-panel="leave">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Leave Application</p>
+              <h3>Submit and review leave requests</h3>
+            </div>
+            <span class="badge info">Workflow</span>
+          </div>
+
+          <form class="form-grid" id="leaveForm">
+            <label>
+              Employee Name
+              <input type="text" placeholder="Aarav Sharma" required>
+            </label>
+            <label>
+              Leave Type
+              <select>
+                <option>Casual Leave</option>
+                <option>Sick Leave</option>
+                <option>Earned Leave</option>
+              </select>
+            </label>
+            <label>
+              From Date
+              <input type="date" required>
+            </label>
+            <label>
+              To Date
+              <input type="date" required>
+            </label>
+            <label class="full-width">
+              Reason
+              <textarea placeholder="Describe the leave reason" required></textarea>
+            </label>
+            <div class="form-actions full-width">
+              <button type="submit" class="primary-btn">Apply Leave</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel view-panel" data-view-panel="timesheets">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Timesheets</p>
+              <h3>Track daily work hours</h3>
+            </div>
+            <span class="badge neutral">Single page</span>
+          </div>
+
+          <form class="form-grid" id="timesheetForm">
+            <label>
+              Employee Name
+              <input type="text" placeholder="Neha" required>
+            </label>
+            <label>
+              Project
+              <input type="text" placeholder="CRM Dashboard" required>
+            </label>
+            <label>
+              Date
+              <input type="date" required>
+            </label>
+            <label>
+              Hours Worked
+              <input type="number" min="0" max="24" step="0.5" placeholder="8" required>
+            </label>
+            <label class="full-width">
+              Work Summary
+              <textarea placeholder="Briefly describe completed work" required></textarea>
+            </label>
+            <div class="form-actions full-width">
+              <button type="submit" class="primary-btn">Submit Timesheet</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel view-panel" data-view-panel="employees">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Employee Directory</p>
+              <h3>Quick view of team members</h3>
+            </div>
+            <span class="badge neutral">128 records</span>
+          </div>
+
+          <div class="employee-cards">
+            <div class="employee-card">
+              <h4>Priya Nair</h4>
+              <p>HR Manager</p>
+              <span>Checked in at 09:04 AM</span>
+            </div>
+            <div class="employee-card">
+              <h4>Vikram Das</h4>
+              <p>Frontend Developer</p>
+              <span>Working remotely</span>
+            </div>
+            <div class="employee-card">
+              <h4>Isha Mehta</h4>
+              <p>Operations Lead</p>
+              <span>Leave until Apr 20</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel view-panel" data-view-panel="reports">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Reports</p>
+              <h3>Planned outputs for later backend integration</h3>
+            </div>
+            <span class="badge success">Ready</span>
+          </div>
+
+          <div class="roadmap-grid">
+            <div class="roadmap-card">
+              <strong>Attendance report</strong>
+              <p>Daily presence, late check-in, and out-of-zone attempts.</p>
+            </div>
+            <div class="roadmap-card">
+              <strong>Leave report</strong>
+              <p>Balance, approvals, rejected requests, and department summaries.</p>
+            </div>
+            <div class="roadmap-card">
+              <strong>Timesheet report</strong>
+              <p>Project hour totals, pending submissions, and utilization trends.</p>
+            </div>
+            <div class="roadmap-card">
+              <strong>Audit report</strong>
+              <p>Location capture, accuracy, browser permission, and verification events.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel view-panel" data-view-panel="settings">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Settings</p>
+              <h3>Attendance location policy</h3>
+            </div>
+            <span class="badge warning">Admin only</span>
+          </div>
+
+          <form class="form-grid" id="geofenceForm">
+            <label>
+              Office Latitude
+              <input type="number" id="officeLatitude" step="0.000001" placeholder="12.971599" required>
+            </label>
+            <label>
+              Office Longitude
+              <input type="number" id="officeLongitude" step="0.000001" placeholder="77.594566" required>
+            </label>
+            <label>
+              Radius in Meters
+              <input type="number" id="allowedRadius" min="150" max="200" step="1" value="150" required>
+            </label>
+            <label>
+              Office Label
+              <input type="text" id="officeLabel" placeholder="Head Office" required>
+            </label>
+            <label class="full-width">
+              Policy Note
+              <textarea id="policyNote" placeholder="Attendance is allowed only within the approved office radius."></textarea>
+            </label>
+            <div class="form-actions full-width">
+              <button type="submit" class="primary-btn">Save Attendance Rule</button>
+            </div>
+          </form>
+
+          <div class="location-box" id="settingsStatus">
+            Configure the official attendance location here. Once you share the exact latitude and longitude, we can lock this to your office zone.
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
